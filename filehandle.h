@@ -3,6 +3,7 @@
 #include <qstring>
 #include <QDir>
 #include <QStringList>
+#include <QTextStream>
 
 
 class FileHandle
@@ -12,6 +13,7 @@ public:
     bool setXMLDir(QString&DirName);
     bool getFile(QString&file_name, const int&);
     double getXMLCount();
+    bool writeFile(const QString &,const QString &);
 private:
     QString XML_Path;
 };

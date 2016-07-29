@@ -25,6 +25,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void showInfo(const QString&);
+    void creatCNTVVector();
 };
 
 #endif // MAINWINDOW_H

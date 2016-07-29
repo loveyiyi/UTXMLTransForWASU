@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     xmlhandle.cpp \
     filehandle.cpp \
-    utunit.cpp
+    utunit.cpp \
+    wasuhandle.cpp
 
 HEADERS  += mainwindow.h \
     xmlhandle.h \
     filehandle.h \
-    utunit.h
+    utunit.h \
+    wasuhandle.h
 
 FORMS    += mainwindow.ui

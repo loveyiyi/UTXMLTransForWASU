@@ -21,11 +21,15 @@ UTUnit::UTUnit()
     objVector.append(cccccc);*/
 
 }
-bool UTUnit::setAttrValue(const int nType,const QString& nodeName,const QString& attrName,const QString& value){
+bool UTUnit::appendObj(const CNTV_XML_Vector &tVector){
+    CNTV_XML_Vector tpVector = tVector;
+    objVector.append(tpVector);
     return true;
 }
 
-bool UTUnit::setNodeValue(const int nType, const QString& nodeName, const QString& value){
+bool UTUnit::appendMap(const CNTV_XML_Vector &tVector){
+    CNTV_XML_Vector tpVector = tVector;
+    objVector.append(tpVector);
     return true;
 }
 bool UTUnit::createUTXML(QString& outputString ){

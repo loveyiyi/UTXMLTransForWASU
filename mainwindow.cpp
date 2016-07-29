@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "filehandle.h"
-#include "xmlhandle.h"
+#include "wasuhandle.h"
 #include "utunit.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QUrl>
 #include <QMessageBox>
+#include <QVector>
+#include <QPair>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->lineEdit->setText("c:/xml");
+    ui->lineEdit_2->setText("c:/qt");
 }
 
 MainWindow::~MainWindow()
@@ -31,6 +36,7 @@ void MainWindow::showInfo(const QString& message)
 
 void MainWindow::on_pushButton_clicked()
 {
+
     QUrl fileName = QFileDialog::getExistingDirectory(this,"选择输入路径","C:/",QFileDialog::ShowDirsOnly);
     if(fileName.toString().size()>0)
         ui->lineEdit->setText(fileName.toString());
@@ -55,6 +61,12 @@ void MainWindow::on_pushButton_2_clicked()
         QMessageBox::critical(this," 错误","请选择输入输出地址");
         return;
     }
+    creatCNTVVector();
+    return;
+}
+
+
+void MainWindow::creatCNTVVector(){
     QString inputDIR = ui->lineEdit->text();
     QString outputDIR = ui->lineEdit_2->text();
 
@@ -62,6 +74,11 @@ void MainWindow::on_pushButton_2_clicked()
     fileVector.setXMLDir(inputDIR);
     showInfo("目录下共有："+QString::number(fileVector.getXMLCount())+"个文件");
     for(int i = 0;i<fileVector.getXMLCount();i++){
+        //每次循环需要重新来的变量
+        UTUnit tpUTVector;
+        CNTV_XML_Vector cntvVector;
+        WASUHandle thisXML;
+
         QString xmlfile;
         bool ok = fileVector.getFile(xmlfile,i);
 
@@ -70,16 +87,43 @@ void MainWindow::on_pushButton_2_clicked()
         else
             continue;
 
+        QString showstring1;
+        thisXML.setXMl(xmlfile);
+        thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<"CP23010020160308070700"<<"Title","vod:TitleFull","vod:TitleFull",showstring1);
+        showInfo(showstring1);
+        thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<"CP23010020160308070700"<<"Title","adi:AssetLifetime","endDateTime",showstring1);
+        showInfo(showstring1);
 
-        XMLHandle aa;
-        QString teststring;
-        aa.setXMl(xmlfile);
-        aa.findValue("vod:CategoryPath",teststring);
+/*
+
+        thisXML.setXMl(xmlfile);
+        thisXML.findValue("vod:CategoryPath",teststring);
+*/
+
+        QVector<QPair<QString,QStringList>>  idVector;
+        thisXML.findGourpIDfromWASU(idVector);
+        showInfo(QString::number(idVector.size()));
+        QString tpID;
+        for(int i = 0;i<idVector.size();i++){
+
+            showInfo("main:\n"+idVector[i].first);
+
+            QString key;
+            foreach(key,idVector[i].second){
+                showstring1.clear();
+                thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<key<<"Title","vod:TitleFull","vod:TitleFull",showstring1);
+                showInfo(showstring1);
+                showInfo(key);
+            }
+            showInfo("  ");
+        }
+
+
+        QString showstring;
+        tpUTVector.createUTXML(showstring);
+        showInfo(showstring);
     }
 
 
-    QString showstring;
-    UTUnit cc;
-    cc.createUTXML(showstring);
-    showInfo(showstring);
+
 }
