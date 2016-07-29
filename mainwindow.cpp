@@ -95,11 +95,17 @@ void MainWindow::creatCNTVVector(){
         showInfo("包含："+QString::number(xmlOutputContent.size())+"个内容" );
         int subNumber = 1;
         foreach (eachProgram, xmlOutputContent) {
-            showInfo(eachProgram);
+            //showInfo(eachProgram);
             QString tmpFilePath;
-            tmpFilePath = outputDIR+"/"+QString::number(subNumber)+"_";
-            tmpFilePath.append(xmlfile);
-            fileVector.writeFile(tmpFilePath,eachProgram);
+            tmpFilePath = xmlfile;
+            tmpFilePath.remove(inputDIR+"/");
+            tmpFilePath.insert(0,outputDIR+"/"+QString::number(subNumber)+"_");
+            //tmpFilePath.append(xmlfile);
+            //写入文件
+            showInfo("写入文件:"+tmpFilePath);
+            bool ok = fileVector.writeFile(tmpFilePath,eachProgram);
+            if(!ok)
+                showInfo("文件出错");
             subNumber++;
         }
 

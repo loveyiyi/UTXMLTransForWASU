@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QStringList>
 #include <QTextStream>
+#include <QTextCodec>
 
 
 class FileHandle

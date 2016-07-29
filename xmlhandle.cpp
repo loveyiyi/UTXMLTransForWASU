@@ -93,7 +93,7 @@ bool XMLHandle::findAttrValueOnCond(const QString & nodeName,
             if(nodeHasAttrValue(iNode.item(i),condString) ){
                 if(subNodeName.size()>0){
                     QDomNodeList subNodeList = iNode.item(i).childNodes();
-                    int count = subNodeList.size();
+                    //int count = subNodeList.size();
                     for(int j=0;j<subNodeList.size();j++){
                         if(subNodeList.item(j).nodeName() == subNodeName){
                             value = subNodeList.item(j).toElement().attribute(attrName);

@@ -55,8 +55,13 @@ bool FileHandle::getFile(QString& file_name,const int& ordernumber)
 
 bool FileHandle::writeFile(const QString &fileName, const QString &fileContent){
     QFile outFile(fileName);
+    QTextCodec *gbk = QTextCodec::codecForName("GB18030");
+    QTextCodec *utf8 = QTextCodec::codecForName("UTF-8");
+    QString utf2gbk = gbk->toUnicode(fileContent.toLocal8Bit());
+    //QString g2u = gbk->toUnicode(gbk->fromUnicode(fileContent));
     if(outFile.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream ts(&outFile);
+        ts.setCodec(utf8);
         ts << fileContent << endl;
         return true;
     }else
