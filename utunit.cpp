@@ -39,7 +39,7 @@ bool UTUnit::createUTXML(QString& outputString ){
     QDomNode mapRootNode;
 
     //处理文件头信息
-    QDomNode headNode( UTXml.createProcessingInstruction( "xml", "version=\"1.0\" \"encoding=\"UTF-8\" \"standalone=\"no\"" ) );
+    QDomNode headNode( UTXml.createProcessingInstruction( "xml", "version=\"1.0\" \"encoding=\"UTF-8\" standalone=\"yes\"" ) );
     UTXml.insertBefore( headNode, UTXml.firstChild() );
 
     //建立ADI的主NODE
