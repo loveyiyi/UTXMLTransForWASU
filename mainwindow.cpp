@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QVector>
 #include <QPair>
+#include <QDateTime>
 
 
 
@@ -87,22 +88,37 @@ void MainWindow::creatCNTVVector(){
             continue;
 
         //设置读取的文件
-        QStringList xmlOutputContent;
+        QStringList xmlOutputContent,xmlOutputContent_hd;
         WASUHandle thisXML;
         thisXML.setXMl(xmlfile);
-        thisXML.createXMLforUT(xmlOutputContent);
+        thisXML.createXMLforUT(xmlOutputContent,xmlOutputContent_hd);
         QString eachProgram;
-        showInfo("包含："+QString::number(xmlOutputContent.size())+"个内容" );
+        showInfo("包含："+QString::number(xmlOutputContent.size()+xmlOutputContent_hd.size())+"个内容" );
         int subNumber = 1;
         foreach (eachProgram, xmlOutputContent) {
             //showInfo(eachProgram);
             QString tmpFilePath;
             tmpFilePath = xmlfile;
             tmpFilePath.remove(inputDIR+"/");
-            tmpFilePath.insert(0,outputDIR+"/"+QString::number(subNumber)+"_");
+            tmpFilePath.insert(0,outputDIR+"/"+QString::number(subNumber)+"_sd_");
             //tmpFilePath.append(xmlfile);
             //写入文件
-            showInfo("写入文件:"+tmpFilePath);
+            showInfo("生成标清文件:"+tmpFilePath);
+            bool ok = fileVector.writeFile(tmpFilePath,eachProgram);
+            if(!ok)
+                showInfo("文件出错");
+            subNumber++;
+        }
+        subNumber = 1;
+        foreach (eachProgram, xmlOutputContent) {
+            //showInfo(eachProgram);
+            QString tmpFilePath;
+            tmpFilePath = xmlfile;
+            tmpFilePath.remove(inputDIR+"/");
+            tmpFilePath.insert(0,outputDIR+"/"+QString::number(subNumber)+"_hd_");
+            //tmpFilePath.append(xmlfile);
+            //写入文件
+            showInfo("生成高清文件:"+tmpFilePath);
             bool ok = fileVector.writeFile(tmpFilePath,eachProgram);
             if(!ok)
                 showInfo("文件出错");
@@ -110,8 +126,10 @@ void MainWindow::creatCNTVVector(){
         }
 
 
+
     }
 
-
+    QString logFilePath = outputDIR+"/"+ QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")+"_trans.log";
+    bool ok = fileVector.writeFile(logFilePath,ui->textEdit->toPlainText());
 
 }
