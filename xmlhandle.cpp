@@ -36,7 +36,7 @@ bool XMLHandle::findValueOnCond(const QString & nodeName,
                                 const QStringList&nodeConditions,
                                 const QString &subNodeName,
                                 QString &value){
-
+    value.clear();
     QDomNodeList iNode =xmlDoc.toDocument().elementsByTagName(nodeName);
     for(int i = 0;i<iNode.size();i++){
         QString condString;
@@ -67,6 +67,7 @@ bool XMLHandle::findAttrValueOnCond(const QString & nodeName,
                          const QString &subNodeName,
                          const QString&attrName,
                          QString &value){
+    value.clear();
     QDomNodeList iNode =xmlDoc.toDocument().elementsByTagName(nodeName);
     for(int i = 0;i<iNode.size();i++){
         QString condString;
@@ -92,6 +93,7 @@ bool XMLHandle::findAttrValueOnCond(const QString & nodeName,
 }
 
 bool XMLHandle::findValue(const QString&nodeName, QString& value){
+    value.clear();
     QDomNodeList childNodes = xmlDoc.toDocument().elementsByTagName(nodeName);
     for(int i = 0;i<childNodes.size();i++){
         QDomNode tNode = childNodes.item(i);
@@ -104,6 +106,7 @@ bool XMLHandle::findValue(const QString&nodeName, QString& value){
 }
 
 bool XMLHandle::findAttrValue(const QString&nodeName,const QString&attrName,QString&value){
+    value.clear();
     QDomNodeList allSetNode =xmlDoc.toDocument().elementsByTagName(nodeName);
     for(int i = 0;i<allSetNode.count();i++){
         QDomNode tNode = allSetNode.item(i);

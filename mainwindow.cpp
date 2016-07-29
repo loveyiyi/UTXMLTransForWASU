@@ -101,28 +101,40 @@ void MainWindow::creatCNTVVector(){
         QVector<QPair<QString,QStringList>>  idVector;
 
 
-        idVector.clear();
         thisXML.findAssetIDfromWASU(idVector);
         showInfo("AssetID number:"+QString::number(idVector.size()));
         for(int i = 0;i<idVector.size();i++){
             QString programID=idVector[i].first;
-            showInfo("asset main:"+programID);
+            showInfo("Program id :"+programID);
+            QString cntvCode;
+            thisXML.WASUID2CNTVID(programID,cntvCode);
+            showInfo("cntv Program id :"+cntvCode);
+
             QString key;
-            foreach(key,idVector[i].second){
+            foreach(key,idVector[i].second){                
                 showInfo("asset id:"+key);
-                showstring1.clear();
+                QString cntvCode1;
+                thisXML.WASUID2CNTVID(key,cntvCode1);
+                showInfo("cntv Code id :"+cntvCode1);
+
                 thisXML.findValueOnCond("vod:Title",QStringList()<<programID,"vod:TitleFull",showstring1);
                 showInfo("video name:"+showstring1);
-                showstring1.clear();
+
                 thisXML.findAttrValueOnCond("vod:Video",QStringList()<<key,"","transferContentURL",showstring1);
                 showInfo("video path:"+showstring1);
+
+                thisXML.findAttrValueOnCond("vod:Title",QStringList()<<programID,"adi:AssetLifetime","startDateTime",showstring1);
+                showInfo("video startDateTime:"+showstring1);
+
+                thisXML.findAttrValueOnCond("vod:Title",QStringList()<<programID,"adi:AssetLifetime","endDateTime",showstring1);
+                showInfo("video endDateTime:"+showstring1);
+
 
             }
             showInfo("  ");
         }
 
 
-        idVector.clear();
         thisXML.findGourpIDfromWASU(idVector);
         showInfo("GroupID number:"+QString::number(idVector.size()));
         for(int i = 0;i<idVector.size();i++){
