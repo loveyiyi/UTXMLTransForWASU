@@ -85,8 +85,8 @@ bool UTUnit::createUTXML(QString& outputString ){
         for(int j = 0;j<mapVector[i].pVector.size();j++){
             QDomNode mapPropertyNode=UTXml.createElement("Property");
             mapPropertyNode.toElement().setAttribute("Name",mapVector[i].pVector[j].first);
-            if(!objVector[i].pVector[j].second.isEmpty())
-                mapPropertyNode.appendChild(UTXml.createTextNode(objVector[i].pVector[j].second));
+            if(!mapVector[i].pVector[j].second.isEmpty())
+                mapPropertyNode.appendChild(UTXml.createTextNode(mapVector[i].pVector[j].second));
             mapCatalogNode.appendChild(mapPropertyNode);
         }
         mapRootNode.appendChild(mapCatalogNode);
