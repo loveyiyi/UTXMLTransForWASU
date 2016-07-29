@@ -89,39 +89,57 @@ void MainWindow::creatCNTVVector(){
 
         QString showstring1;
         thisXML.setXMl(xmlfile);
+
+ /*       thisXML.setXMl(xmlfile);
         thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<"CP23010020160308070700"<<"Title","vod:TitleFull","vod:TitleFull",showstring1);
         showInfo(showstring1);
         thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<"CP23010020160308070700"<<"Title","adi:AssetLifetime","endDateTime",showstring1);
         showInfo(showstring1);
-
-/*
-
-        thisXML.setXMl(xmlfile);
         thisXML.findValue("vod:CategoryPath",teststring);
 */
-
-        QVector<QPair<QString,QStringList>>  idVector;
-        thisXML.findGourpIDfromWASU(idVector);
-        showInfo(QString::number(idVector.size()));
         QString tpID;
+        QVector<QPair<QString,QStringList>>  idVector;
+
+
+        idVector.clear();
+        thisXML.findAssetIDfromWASU(idVector);
+        showInfo("AssetID number:"+QString::number(idVector.size()));
         for(int i = 0;i<idVector.size();i++){
-
-            showInfo("main:\n"+idVector[i].first);
-
+            QString programID=idVector[i].first;
+            showInfo("asset main:"+programID);
             QString key;
             foreach(key,idVector[i].second){
+                showInfo("asset id:"+key);
                 showstring1.clear();
-                thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<key<<"Title","vod:TitleFull","vod:TitleFull",showstring1);
-                showInfo(showstring1);
-                showInfo(key);
+                thisXML.findValueOnCond("vod:Title",QStringList()<<programID,"vod:TitleFull",showstring1);
+                showInfo("video name:"+showstring1);
+                showstring1.clear();
+                thisXML.findAttrValueOnCond("vod:Video",QStringList()<<key,"","transferContentURL",showstring1);
+                showInfo("video path:"+showstring1);
+
             }
             showInfo("  ");
         }
 
 
+        idVector.clear();
+        thisXML.findGourpIDfromWASU(idVector);
+        showInfo("GroupID number:"+QString::number(idVector.size()));
+        for(int i = 0;i<idVector.size();i++){
+            showInfo("Group ID:"+idVector[i].first);
+            QString key;
+            foreach(key,idVector[i].second){
+                showInfo("Asset ID:"+key);
+            }
+            showInfo("  ");
+        }
+
+
+/*
         QString showstring;
         tpUTVector.createUTXML(showstring);
-        showInfo(showstring);
+        showInfo(showstring);*/
+        showInfo("");
     }
 
 

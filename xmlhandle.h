@@ -14,19 +14,22 @@ public:
 
 
 
-    bool findValueOnCond(const QString&,const QStringList&,const QString &,const QString&,QString &);
+    bool findValueOnCond(const QString & nodeName,
+                         const QStringList&nodeConditions,
+                         const QString &subNodeName,
+                         QString &value);
+    bool findAttrValueOnCond(const QString & nodeName,
+                             const QStringList&attrConditions,
+                             const QString &subNodeName,
+                             const QString&attrName,
+                             QString &value);
 
-    bool findValue(const QString&,QString&);
-    bool findAttrValue(const QString&,const QString&,QString&);
+    bool findValue(const QString& nodeName,QString&value);
+    bool findAttrValue(const QString&nodeName,const QString&attrName,QString&value);
 
-    bool findValues(const QStringList&,QStringList&);
-    bool findAttrValues(const QStringList&,const QStringList &,QStringList&);
 
 protected:
-    bool findNodeValue(QDomNode&,const QString&,QString&);
-    bool findNodeAttr(QDomNode&,const QString&,const QString&,QString&);
-    bool findNodeOnCond(QDomNode&,const QString&,const QStringList&,const QString &,const QString&,QString &);
-    bool nodeHasAttrValue(QDomNode&,const QString&);
+    bool nodeHasAttrValue(QDomNode,const QString&);
 
     QDomDocument xmlDoc;
 private:
