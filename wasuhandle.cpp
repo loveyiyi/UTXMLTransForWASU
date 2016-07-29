@@ -57,7 +57,7 @@ void WASUHandle::createFilePath(QString &file){
     if(file.size()<1)
         return;
 
-    QString localPath = "ftp://hnbk:rss123@172.25.52.15:21//NAS/nas01/huashu2.3M/";
+    QString localPath = "ftp://hnbk:rss123@172.25.52.15:21//NAS/nas02/huashu2.3M/";
     localPath.append(file);
     localPath.append(".ts");
     file = localPath.toHtmlEscaped();
@@ -68,7 +68,7 @@ void WASUHandle::createFilePath_HD(QString &file){
     if(file.size()<1)
         return;
 
-    QString localPath = "ftp://hnbk:rss123@172.25.52.15:21//NAS/nas01/huashu/";
+    QString localPath = "ftp://hnbk:rss123@172.25.52.15:21//NAS/nas02/huashu4M/";
     localPath.append(file);
     localPath.append(".ts");
     file = localPath.toHtmlEscaped();
@@ -80,7 +80,7 @@ void WASUHandle::createPicPath(QString &file){
     if(file.size()<1)
         return;
 
-    QString localPath = "ftp://hnbk:rss123@172.25.52.15:21//NAS/nas01/picture/";
+    QString localPath = "ftp://hnbk:rss123@172.25.52.15:21//NAS/nas02/picture/";
     localPath.append(file);
     localPath.append(".jpg");
     file = localPath;
@@ -905,7 +905,7 @@ void WASUHandle::createSeriesXML(QString &outputString){
     seriesXml.pVector.append(nodePair);
 
     QString tmpItemCount;
-    findValueOnCond("vod:Title",QStringList()<<wasuSeriesCode,"Items",tmpItemCount);
+    findValueOnCond("vod:Title",QStringList()<<wasuSeriesCode,"vod:Items",tmpItemCount);
     nodePair.first = "VolumnCount";
     nodePair.second = tmpItemCount;
     seriesXml.pVector.append(nodePair);
