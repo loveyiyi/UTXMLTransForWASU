@@ -3,6 +3,8 @@
 UTUnit::UTUnit()
 {
     CNTV_XML_Vector cccccc;
+    objVector.clear();
+    mapVector.clear();
 /* 测试用代码
     cccccc.elementType = 1;
     QPair<QString,QString > tempaaa;
@@ -22,14 +24,12 @@ UTUnit::UTUnit()
 
 }
 bool UTUnit::appendObj(const CNTV_XML_Vector &tVector){
-    CNTV_XML_Vector tpVector = tVector;
-    objVector.append(tpVector);
+    objVector.append(tVector);
     return true;
 }
 
 bool UTUnit::appendMap(const CNTV_XML_Vector &tVector){
-    CNTV_XML_Vector tpVector = tVector;
-    objVector.append(tpVector);
+    mapVector.append(tVector);
     return true;
 }
 bool UTUnit::createUTXML(QString& outputString ){
@@ -54,17 +54,22 @@ bool UTUnit::createUTXML(QString& outputString ){
     adiNode.appendChild(objRootNode);
     for(int i = 0;i<objVector.size();i++){
         QDomNode objCatalogNode=UTXml.createElement("Object");
+        objRootNode.appendChild(objCatalogNode);
+
         for(int j = 0;j<objVector[i].nodeAttrVector.size();j++){
             objCatalogNode.toElement().setAttribute(objVector[i].nodeAttrVector[j].first,
                                                     objVector[i].nodeAttrVector[j].second);
         }
         for(int j = 0;j<objVector[i].pVector.size();j++){
             QDomNode objPropertyNode=UTXml.createElement("Property");
-            objPropertyNode.toElement().setAttribute("Name",objVector[i].pVector[j].first);
-            objPropertyNode.appendChild(UTXml.createTextNode(objVector[i].pVector[j].second));
             objCatalogNode.appendChild(objPropertyNode);
+
+            objPropertyNode.toElement().setAttribute("Name",objVector[i].pVector[j].first);
+            if(!objVector[i].pVector[j].second.isEmpty())
+                objPropertyNode.appendChild(UTXml.createTextNode(objVector[i].pVector[j].second));
+
         }
-        objRootNode.appendChild(objCatalogNode);
+
     }
 
 
@@ -72,7 +77,7 @@ bool UTUnit::createUTXML(QString& outputString ){
     mapRootNode = UTXml.createElement("Mappings");
     adiNode.appendChild(mapRootNode);
     for(int i = 0;i<mapVector.size();i++){
-        QDomNode mapCatalogNode=UTXml.createElement("Mappings");
+        QDomNode mapCatalogNode=UTXml.createElement("Mapping");
         for(int j = 0;j<mapVector[i].nodeAttrVector.size();j++){
             mapCatalogNode.toElement().setAttribute(mapVector[i].nodeAttrVector[j].first,
                                                     mapVector[i].nodeAttrVector[j].second);
@@ -80,7 +85,8 @@ bool UTUnit::createUTXML(QString& outputString ){
         for(int j = 0;j<mapVector[i].pVector.size();j++){
             QDomNode mapPropertyNode=UTXml.createElement("Property");
             mapPropertyNode.toElement().setAttribute("Name",mapVector[i].pVector[j].first);
-            mapPropertyNode.appendChild(UTXml.createTextNode(mapVector[i].pVector[j].second));
+            if(!objVector[i].pVector[j].second.isEmpty())
+                mapPropertyNode.appendChild(UTXml.createTextNode(objVector[i].pVector[j].second));
             mapCatalogNode.appendChild(mapPropertyNode);
         }
         mapRootNode.appendChild(mapCatalogNode);

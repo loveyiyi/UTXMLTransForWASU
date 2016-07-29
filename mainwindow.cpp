@@ -73,85 +73,24 @@ void MainWindow::creatCNTVVector(){
     FileHandle fileVector;
     fileVector.setXMLDir(inputDIR);
     showInfo("目录下共有："+QString::number(fileVector.getXMLCount())+"个文件");
-    for(int i = 0;i<fileVector.getXMLCount();i++){
-        //每次循环需要重新来的变量
-        UTUnit tpUTVector;
-        CNTV_XML_Vector cntvVector;
-        WASUHandle thisXML;
 
+    //开始循环文件
+    for(int i = 0;i<fileVector.getXMLCount();i++){
+        //确认文件以及错误修正
         QString xmlfile;
         bool ok = fileVector.getFile(xmlfile,i);
-
         if(ok)
             showInfo("处理："+xmlfile );
         else
             continue;
 
-        QString showstring1;
+        //设置读取的文件
+        QString xmlOutputContent;
+        WASUHandle thisXML;
         thisXML.setXMl(xmlfile);
+        thisXML.createXMLforUT(xmlOutputContent);
+        showInfo(xmlOutputContent);
 
- /*       thisXML.setXMl(xmlfile);
-        thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<"CP23010020160308070700"<<"Title","vod:TitleFull","vod:TitleFull",showstring1);
-        showInfo(showstring1);
-        thisXML.findValueOnCond("adi:AddMetadataAsset",QStringList()<<"CP23010020160308070700"<<"Title","adi:AssetLifetime","endDateTime",showstring1);
-        showInfo(showstring1);
-        thisXML.findValue("vod:CategoryPath",teststring);
-*/
-        QString tpID;
-        QVector<QPair<QString,QStringList>>  idVector;
-
-
-        thisXML.findAssetIDfromWASU(idVector);
-        showInfo("AssetID number:"+QString::number(idVector.size()));
-        for(int i = 0;i<idVector.size();i++){
-            QString programID=idVector[i].first;
-            showInfo("Program id :"+programID);
-            QString cntvCode;
-            thisXML.WASUID2CNTVID(programID,cntvCode);
-            showInfo("cntv Program id :"+cntvCode);
-
-            QString key;
-            foreach(key,idVector[i].second){                
-                showInfo("asset id:"+key);
-                QString cntvCode1;
-                thisXML.WASUID2CNTVID(key,cntvCode1);
-                showInfo("cntv Code id :"+cntvCode1);
-
-                thisXML.findValueOnCond("vod:Title",QStringList()<<programID,"vod:TitleFull",showstring1);
-                showInfo("video name:"+showstring1);
-
-                thisXML.findAttrValueOnCond("vod:Video",QStringList()<<key,"","transferContentURL",showstring1);
-                showInfo("video path:"+showstring1);
-
-                thisXML.findAttrValueOnCond("vod:Title",QStringList()<<programID,"adi:AssetLifetime","startDateTime",showstring1);
-                showInfo("video startDateTime:"+showstring1);
-
-                thisXML.findAttrValueOnCond("vod:Title",QStringList()<<programID,"adi:AssetLifetime","endDateTime",showstring1);
-                showInfo("video endDateTime:"+showstring1);
-
-
-            }
-            showInfo("  ");
-        }
-
-
-        thisXML.findGourpIDfromWASU(idVector);
-        showInfo("GroupID number:"+QString::number(idVector.size()));
-        for(int i = 0;i<idVector.size();i++){
-            showInfo("Group ID:"+idVector[i].first);
-            QString key;
-            foreach(key,idVector[i].second){
-                showInfo("Asset ID:"+key);
-            }
-            showInfo("  ");
-        }
-
-
-/*
-        QString showstring;
-        tpUTVector.createUTXML(showstring);
-        showInfo(showstring);*/
-        showInfo("");
     }
 
 
