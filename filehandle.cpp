@@ -55,7 +55,7 @@ bool FileHandle::getFile(QString& file_name,const int& ordernumber)
 
 bool FileHandle::writeFile(const QString &fileName, const QString &fileContent){
     QFile outFile(fileName);
-    if(outFile.open(QIODevice::WriteOnly | QIODevice::Append)){
+    if(outFile.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream ts(&outFile);
         ts << fileContent << endl;
         return true;

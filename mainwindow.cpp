@@ -61,6 +61,8 @@ void MainWindow::on_pushButton_2_clicked()
         QMessageBox::critical(this," 错误","请选择输入输出地址");
         return;
     }
+
+    ui->textEdit->clear();
     creatCNTVVector();
     return;
 }
@@ -91,8 +93,14 @@ void MainWindow::creatCNTVVector(){
         thisXML.createXMLforUT(xmlOutputContent);
         QString eachProgram;
         showInfo("包含："+QString::number(xmlOutputContent.size())+"个内容" );
+        int subNumber = 1;
         foreach (eachProgram, xmlOutputContent) {
             showInfo(eachProgram);
+            QString tmpFilePath;
+            tmpFilePath = outputDIR+"/"+QString::number(subNumber)+"_";
+            tmpFilePath.append(xmlfile);
+            fileVector.writeFile(tmpFilePath,eachProgram);
+            subNumber++;
         }
 
 
