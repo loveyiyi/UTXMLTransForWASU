@@ -30,6 +30,25 @@ bool XMLHandle::setXMl(const QString& xmlName)
     return true;
 }
 
+bool XMLHandle::findValueOnCond(const QString & nodeName,
+                                const QString &subNodeName,
+                                QString &value){
+    value.clear();
+    QDomNodeList iNode =xmlDoc.toDocument().elementsByTagName(nodeName);
+    for(int i = 0;i<iNode.size();i++){
+       if(!iNode.at(i).hasChildNodes())
+           continue;
+       QDomNodeList iNode_sublist = iNode.item(i).childNodes();
+       for(int j = 0;j<iNode_sublist.size();j++){
+           if(iNode_sublist.item(j).toElement().nodeName() == subNodeName){
+               value = iNode_sublist.item(j).toElement().text();
+               return true;
+           }
+       }
+
+    }
+    return false;
+}
 
 
 bool XMLHandle::findValueOnCond(const QString & nodeName,
@@ -42,7 +61,6 @@ bool XMLHandle::findValueOnCond(const QString & nodeName,
         QString condString;
         foreach(condString,nodeConditions){
             if(nodeHasAttrValue(iNode.item(i),condString) ){
-
                 if(subNodeName.size()>0){
                     QDomNodeList subNodeList = iNode.item(i).childNodes();
                     for(int j=0;j<subNodeList.size();j++){

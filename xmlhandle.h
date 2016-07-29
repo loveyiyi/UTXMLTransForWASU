@@ -18,6 +18,9 @@ public:
                          const QStringList&nodeConditions,
                          const QString &subNodeName,
                          QString &value);
+    bool findValueOnCond(const QString & nodeName,
+                         const QString &subNodeName,
+                         QString &value);
     bool findAttrValueOnCond(const QString & nodeName,
                              const QStringList&attrConditions,
                              const QString &subNodeName,

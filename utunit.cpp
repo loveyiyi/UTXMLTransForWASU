@@ -39,7 +39,7 @@ bool UTUnit::createUTXML(QString& outputString ){
     QDomNode mapRootNode;
 
     //处理文件头信息
-    QDomNode headNode( UTXml.createProcessingInstruction( "xml", "version=\"1.0\" \"encoding=\"UTF-8\" standalone=\"yes\"" ) );
+    QDomNode headNode( UTXml.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"UTF-8\" standalone=\"true\"" ) );
     UTXml.insertBefore( headNode, UTXml.firstChild() );
 
     //建立ADI的主NODE
@@ -50,7 +50,7 @@ bool UTUnit::createUTXML(QString& outputString ){
 
 
     //处理文件以及编目的相关信息
-    objRootNode = UTXml.createElement("Object");
+    objRootNode = UTXml.createElement("Objects");
     adiNode.appendChild(objRootNode);
     for(int i = 0;i<objVector.size();i++){
         QDomNode objCatalogNode=UTXml.createElement("Object");

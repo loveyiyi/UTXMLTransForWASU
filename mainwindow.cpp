@@ -85,11 +85,16 @@ void MainWindow::creatCNTVVector(){
             continue;
 
         //设置读取的文件
-        QString xmlOutputContent;
+        QStringList xmlOutputContent;
         WASUHandle thisXML;
         thisXML.setXMl(xmlfile);
         thisXML.createXMLforUT(xmlOutputContent);
-        showInfo(xmlOutputContent);
+        QString eachProgram;
+        showInfo("包含："+QString::number(xmlOutputContent.size())+"个内容" );
+        foreach (eachProgram, xmlOutputContent) {
+            showInfo(eachProgram);
+        }
+
 
     }
 
