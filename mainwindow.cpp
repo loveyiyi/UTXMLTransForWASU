@@ -110,7 +110,7 @@ void MainWindow::creatCNTVVector(){
             subNumber++;
         }
         subNumber = 1;
-        foreach (eachProgram, xmlOutputContent) {
+        foreach (eachProgram, xmlOutputContent_hd) {
             //showInfo(eachProgram);
             QString tmpFilePath;
             tmpFilePath = xmlfile;
