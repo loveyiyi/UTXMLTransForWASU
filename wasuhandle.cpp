@@ -228,7 +228,7 @@ void WASUHandle::createSeriesXML_HD(QString &outputString){
     seriesXml.pVector.append(nodePair);
 
     QString tmpItemCount;
-    findValueOnCond("vod:Title",QStringList()<<wasuSeriesCode,"Items",tmpItemCount);
+    findValueOnCond("vod:Title",QStringList()<<wasuSeriesCode,"vod:Items",tmpItemCount);
     nodePair.first = "VolumnCount";
     nodePair.second = tmpItemCount;
     seriesXml.pVector.append(nodePair);
@@ -243,8 +243,9 @@ void WASUHandle::createSeriesXML_HD(QString &outputString){
 
     QString tmpTitleFull;
     findValueOnCond("vod:Title",QStringList()<<wasuSeriesCode,"vod:TitleFull",tmpTitleFull);
+    QString tmpTitleFull1 = tmpTitleFull+"HD";
     nodePair.first = "Name";
-    nodePair.second = tmpTitleFull;
+    nodePair.second = tmpTitleFull1;
     seriesXml.pVector.append(nodePair);
 
     QString tmpActor;
@@ -401,9 +402,10 @@ void WASUHandle::handleSeriesXML_HD(QStringList &outputString){
 
         QString tmpTitleFull;
         findValueOnCond("vod:Title",QStringList()<<tmpGroupAssetID,"vod:TitleFull",tmpTitleFull);
-        nodePair.first = "Name";
-        nodePair.second = tmpTitleFull;
         XML_TitleFull = tmpTitleFull;
+        tmpTitleFull.append("HD");
+        nodePair.first = "Name";
+        nodePair.second = tmpTitleFull;        
         cntvVector_program.pVector.append(nodePair);
 
         QString tmpstartDateTime;
@@ -636,8 +638,9 @@ void WASUHandle::handleMovieXML_HD(QStringList&outputString){
 
 
         findValueOnCond("vod:Title",QStringList()<<tmpGroupAssetID,"vod:TitleFull",tmpTitleFull);
+        QString tmpTitleFull1 = tmpTitleFull + "HD";
         nodePair.first = "Name";
-        nodePair.second = tmpTitleFull;
+        nodePair.second = tmpTitleFull1;
         cntvVector_program.pVector.append(nodePair);
 
         QString tmpstartDateTime;
