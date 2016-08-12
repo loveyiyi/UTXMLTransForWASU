@@ -16,6 +16,7 @@ class WASUHandle : public XMLHandle
 {
 public:
     WASUHandle();
+    bool setNasLocaltion(const QString &);
     bool findAssetIDfromWASU(QMap<QString,QStringList> &);
     bool findGourpIDfromWASU(QMap<QString,QStringList> &);
     bool findGroupAssetIDfromWASU(const QString&,QStringList&);
@@ -55,6 +56,8 @@ protected:
 private:
     QMap<QString,QStringList>  idVector;
     QMap<QString,QStringList>  idGroupVector;
+
+    QString nasLocaltion;
 };
 
 #endif // WASUHANDLE_H

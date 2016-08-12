@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->lineEdit->setText("c:/xml");
     ui->lineEdit_2->setText("c:/qt");
+    ui->lineEdit_3->setText("ftp://hnbk:rss123@172.25.52.15:21//NAS/nas02/");
 }
 
 MainWindow::~MainWindow()
@@ -72,6 +73,7 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::creatCNTVVector(){
     QString inputDIR = ui->lineEdit->text();
     QString outputDIR = ui->lineEdit_2->text();
+    QString nasLocaltion = ui->lineEdit_3->text();
 
     FileHandle fileVector;
     fileVector.setXMLDir(inputDIR);
@@ -91,6 +93,7 @@ void MainWindow::creatCNTVVector(){
         QStringList xmlOutputContent,xmlOutputContent_hd;
         WASUHandle thisXML;
         thisXML.setXMl(xmlfile);
+        thisXML.setNasLocaltion(nasLocaltion);
         thisXML.createXMLforUT(xmlOutputContent,xmlOutputContent_hd);
         QString eachProgram;
         showInfo("包含："+QString::number(xmlOutputContent.size()+xmlOutputContent_hd.size())+"个内容" );
